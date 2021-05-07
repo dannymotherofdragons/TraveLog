@@ -1,0 +1,26 @@
+{
+  "name": "projeto-gut",
+  "version": "1.0.0",
+  "description": "GUT for TSIW",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannymotherofdragons/GUTforTSIW.git"
+  },
+  "author": "Maria Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannymotherofdragons/GUTforTSIW/issues"
+  },
+  "homepage": "https://github.com/dannymotherofdragons/GUTforTSIW#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  }
+}
