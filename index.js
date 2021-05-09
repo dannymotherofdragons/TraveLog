@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 app.use('/', require('./routes/user.routes'));
 
 // call routes 127.1.0.0:8080/tool
-app.use('/', require('./routes/gadgets.routes'));
+//app.use('/', require('./routes/gadgets.routes'));
 
 // response to unexpected request
 app.get('*', function(req, res) {

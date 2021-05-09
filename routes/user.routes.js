@@ -11,17 +11,17 @@ userRouter.use((req, res, next) => {
     next()
 })
 
-// Routes 127.1.0.0:8080/users/
+// Routes 127.1.0.0:8080/user/
 userRouter.route('/')
     .get(userController.getAllUsers)
     .post(userController.createUser)
 
-// Routes 127.1.0.0:8080/users/:userId, routes that need the user ID
+// Routes 127.1.0.0:8080/user/:id, routes that need the user ID
 userRouter.route('/')
     .delete(userController.deleteUser)
     .put(userController.updateUser)
 
-// Route that responds to any other request that is not accounted
+// unexpected
 userRouter.all('*', function (req, res) {
     res.status(404).json({
         message: 'users: what???'
