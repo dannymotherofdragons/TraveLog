@@ -3,8 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const app = express();
-
 // create server
 const app = express();
 const port = process.env.PORT || 8080;
@@ -21,10 +19,10 @@ app.get('/', function (req, res) {
 });
 
 // call routes 127.1.0.0:8080/user
-app.use('/users', require('./routes/user.routes'));
+app.use('/', require('./routes/user.routes'));
 
 // call routes 127.1.0.0:8080/tool
-app.use('/tools', require('./routes/gadgets.routes'));
+app.use('/', require('./routes/gadgets.routes'));
 
 // response to unexpected request
 app.get('*', function(req, res) {
