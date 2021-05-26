@@ -1,6 +1,7 @@
 // get resource model (definition and DB operations)
-const user = require('../models/users.models.js');
+const db = require('../models/users.models.js');
 
+const users = db.user;
 
 // Sequelize operator
 const {
@@ -10,20 +11,20 @@ const {
 
 // EXPORT function to display list of all users
 exports.getAllUsers = (req, res) => {
-    user.findAll()
+    users.findAll()
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving tutorials."
+                message: err.message || "Some error occurred while retrieving the users."
             });
         })
 };
 
 // Function used to create a new user
 exports.createUser = (req, res) => {
-    user.create(req.body)
+    users.create(req.body)
         .then(data => {
             res.status(201).json({
                 message: "created successfully!",
@@ -78,7 +79,7 @@ exports.updateUser = (req, res) => {
 
 // Function used to delete a user based on his id
 exports.deleteUser = (req, res) => {
-    user.destroy({
+    users.destroy({
             where: {
                 id: req.params.id
             }
@@ -104,7 +105,7 @@ exports.deleteUser = (req, res) => {
 
 // function to get all user types (isProfessor or not)
 exports.isProfessor = (req, res) => {
-    user.isProfessor({
+    users.isProfessor({
             where: {
                 id: req.params.id
             }

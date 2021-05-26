@@ -12,7 +12,7 @@ userRouter.use((req, res, next) => {
 })
 
 // Routes 127.1.0.0:8080/user/
-userRouter.route('/')
+userRouter.route('/user')
     .get(userController.getAllUsers)
     .post(userController.createUser)
 

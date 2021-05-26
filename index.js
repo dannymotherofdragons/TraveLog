@@ -1,4 +1,4 @@
-// start modules
+// start modulesno
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -7,6 +7,9 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '127.1.0.0';
+const db =require("./models/db.js");
+
+db.sequelize.sync();
 
 app.use(cors());
 app.use(express.json());
