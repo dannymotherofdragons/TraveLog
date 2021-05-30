@@ -8,6 +8,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '127.1.0.0';
 const db =require("./models/db.js");
+const { sequelize } = require('./models/db.js');
 
 (async () => {
     try {
@@ -17,6 +18,8 @@ const db =require("./models/db.js");
         console.error('Unable to connect to the database:', error);
     }
 })();
+
+db.sequelize.sync();
 
 app.use(cors());
 app.use(express.json());
@@ -32,7 +35,7 @@ app.get('/', function (req, res) {
 app.use('/', require('./routes/user.routes'));
 
 // call routes 127.1.0.0:8080/tool
-//app.use('/', require('./routes/gadgets.routes'));
+app.use('/', require('./routes/gadgets.routes'));
 
 // response to unexpected request
 app.get('*', function(req, res) {

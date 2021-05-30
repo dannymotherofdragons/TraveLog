@@ -13,7 +13,8 @@ gadgetsRouter.use((req, res, next) => {
     next()
 })
 
-gadgetsRouter.get('/', gadgetsController.findAll);
+gadgetsRouter.route('/')
+    .get(gadgetsController.getAllGadgets)
 
 //send a predefined error message for invalid routes on users
 gadgetsRouter.all('*', function (req, res) {

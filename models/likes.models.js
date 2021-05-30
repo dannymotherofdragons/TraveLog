@@ -2,12 +2,14 @@ module.exports = (sequelize, DataTypes) => {
     const like = sequelize.define("like",{
         likeID:{
             type: DataTypes.INTEGER,
-            references: {
-                primaryKey: true,
+            primaryKey: true,
+            /*references: {
                 model: 'users',
-                key: 'id'
-            }
+                key: 'userID'
+            }*/
+
         },
+        
     });
     return like;
 }
