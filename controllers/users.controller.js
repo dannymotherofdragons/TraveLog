@@ -52,7 +52,7 @@ exports.updateUser = (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            isProfessor: req.body.isProfessor,
+            userType: req.body.userType,
         }, {
             where: {
                 id: req.params.id
@@ -102,7 +102,7 @@ exports.deleteUser = (req, res) => {
         })
 };
 
-
+/*
 // function to get all user types (isProfessor or not)
 exports.isProfessor = (req, res) => {
     users.isProfessor({
@@ -128,4 +128,4 @@ exports.isProfessor = (req, res) => {
 
             };
         })
-}; 
+}; */

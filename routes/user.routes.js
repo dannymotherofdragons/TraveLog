@@ -1,6 +1,9 @@
 const express = require('express');
+
 let userRouter = express.Router();
+
 const userController = require('../controllers/users.controller.js');
+
 // middleware for all routes related with users
 userRouter.use((req, res, next) => {
     const start = Date.now();
@@ -12,12 +15,12 @@ userRouter.use((req, res, next) => {
 })
 
 // Routes 127.1.0.0:8080/user/
-userRouter.route('/user')
+userRouter.route('/')
     .get(userController.getAllUsers)
     .post(userController.createUser)
 
-// Routes 127.1.0.0:8080/user/:id, routes that need the user ID
-userRouter.route('/')
+// Routes 127.1.0.0:8080/user/:userID>, routes that need the user ID
+userRouter.route('/:userID')
     .delete(userController.deleteUser)
     .put(userController.updateUser)
 

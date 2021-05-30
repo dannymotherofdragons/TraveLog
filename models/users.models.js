@@ -1,23 +1,27 @@
-const sql = require("./db.js");
-
-// define name model constructor
-const user = function (user) {
-    this.name = user.name;
-    this.id = user.id;
-    this.email = user.email;
-    this.password = user.password;
-    this.isProfessor = user.isProfessor;
-};
-// define method getAll to handle getting all users from DB
-// result = "(error, data)", meaning it will return either an error message or some sort of data
-user.getAll = (result) => {
-    sql.query("SELECT * FROM users", (err, res) => {
-        if (err) {
-            result(err, null);
-            return;
+module.exports = (sequelize, DataTypes) => {
+    const user = sequelize.define("user", {
+        userID:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        userType: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
-        result(null, res); // the result will be sent to the CONTROLLER
     });
+
+    return user;
 };
-// EXPORT MODEL (required by CONTROLLER)
-module.exports = user;

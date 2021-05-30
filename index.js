@@ -9,7 +9,14 @@ const port = process.env.PORT || 8080;
 const host = process.env.HOST || '127.1.0.0';
 const db =require("./models/db.js");
 
-db.sequelize.sync();
+(async () => {
+    try {
+        await db.sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+})();
 
 app.use(cors());
 app.use(express.json());

@@ -1,6 +1,8 @@
 const express = require('express');
 let gadgetsRouter = express.Router();
 const gadgetsController = require('../controllers/gadget.controller');
+
+
 // middleware for all routes related with users
 gadgetsRouter.use((req, res, next) => {
     const start = Date.now();
@@ -10,12 +12,15 @@ gadgetsRouter.use((req, res, next) => {
     });
     next()
 })
+
 gadgetsRouter.get('/', gadgetsController.findAll);
+
 //send a predefined error message for invalid routes on users
 gadgetsRouter.all('*', function (req, res) {
     res.status(404).json({
-        message: 'users: ???'
+        message: 'gadgets: ???'
     });
 })
+
 // EXPORT ROUTES (required by APP)
 module.exports = gadgetsRouter;
