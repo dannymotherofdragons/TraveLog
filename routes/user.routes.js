@@ -19,6 +19,8 @@ userRouter.route('/')
     .get(userController.getAllUsers)
     .post(userController.createUser)
 
+
+
 // Routes 127.1.0.0:8080/user/:userID>, routes that need the user ID
 userRouter.route('/:userID')
     .delete(userController.deleteUser)

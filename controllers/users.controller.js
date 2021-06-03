@@ -55,7 +55,7 @@ exports.updateUser = (req, res) => {
             userType: req.body.userType,
         }, {
             where: {
-                id: req.params.id
+                id: req.params.userID
             }
         })
         .then(data => {
