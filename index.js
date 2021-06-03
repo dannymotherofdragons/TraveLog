@@ -7,17 +7,20 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '127.1.0.0';
-const db =require("./models/db.js");
-const { sequelize } = require('./models/db.js');
+const db = require("./models/db.js");
+const {
+    sequelize,
+    user
+} = require('./models/db.js');
 
-(async () => {
+/*(async () => {
     try {
         await db.sequelize.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
-})();
+})();*/
 
 db.sequelize.sync();
 
@@ -32,15 +35,28 @@ app.get('/', function (req, res) {
 });
 
 // call routes 127.1.0.0:8080/user
-app.use('/', require('./routes/user.routes'));
+app.use('/users', require('./routes/user.routes'));
 
 // call routes 127.1.0.0:8080/tool
-app.use('/', require('./routes/gadgets.routes'));
+app.use('/gadget', require('./routes/gadgets.routes'));
 
 // response to unexpected request
-app.get('*', function(req, res) {
-    res.status(404).json({message: 'not a page sir!'});
+app.get('*', function (req, res) {
+    res.status(404).json({
+        message: 'not a page!'
+    });
 });
 
 // start server
 app.listen(port, host, () => console.log(`App listening at http://${host}:${port}/`));
+
+(async () => {
+    await sequelize.sync();
+    const Gloria = await user.createUser({
+        username: 'Gloria123',
+        email: 'gloria123@gmail.com',
+        password: '123456',
+        userType: false
+    });
+    console.log(Gloria.toJSON());
+})();

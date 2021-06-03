@@ -1,5 +1,7 @@
 const express = require('express');
+
 let gadgetsRouter = express.Router();
+
 const gadgetsController = require('../controllers/gadget.controller');
 
 

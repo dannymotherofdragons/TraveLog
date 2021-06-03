@@ -28,7 +28,7 @@ exports.createUser = (req, res) => {
         .then(data => {
             res.status(201).json({
                 message: "created successfully!",
-                location: "/users/" + data.id
+                location: "/user/" + data.userID
             });
 
         })
