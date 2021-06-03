@@ -40,13 +40,24 @@ app.use('/users', require('./routes/user.routes'));
 // call routes 127.1.0.0:8080/tool
 app.use('/gadget', require('./routes/gadgets.routes'));
 
+/*
 // response to unexpected request
 app.get('*', function (req, res) {
     res.status(404).json({
         message: 'not a page!'
     });
 });
-
+*/
 // start server
 app.listen(port, host, () => console.log(`App listening at http://${host}:${port}/`));
 
+(async () =>{
+    await sequelize.sync();
+    const Gloria = await user.createUser({
+        username: 'Gloria123',
+        email: 'gloria123@gmail.com',
+        password: 'solgaleo',
+        userType: false
+    });
+    console.log(Gloria.ToJSON());
+})

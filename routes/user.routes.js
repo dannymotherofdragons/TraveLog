@@ -14,6 +14,7 @@ userRouter.use((req, res, next) => {
     next()
 })
 
+/*
 // Routes 127.1.0.0:8080/user/
 userRouter.route('/')
     .get(userController.getAllUsers)
@@ -25,13 +26,18 @@ userRouter.route('/')
 userRouter.route('/:userID')
     .delete(userController.deleteUser)
     .put(userController.updateUser)
+*/
+userRouter.get('/', userController.getAllUsers)
+userRouter.post('/', userController.createUser)
 
+userRouter.delete('/:userID', userController.deleteUser)
+userRouter.put('/:userID', userController.updateUser)
 // unexpected
-userRouter.all('*', function (req, res) {
+/*userRouter.all('*', function (req, res) {
     res.status(404).json({
         message: 'users: what???'
     });
-})
+})*/
 
 // Export user routes router
 module.exports = userRouter;
