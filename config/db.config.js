@@ -5,7 +5,7 @@ const config = {
     USER: process.env.DB_USER || 'sql11413718',
     PASSWORD: process.env.DB_PASSWORD || '2nqZrfiwN7',
     DB: process.env.DB_NAME || 'sql11413718',
-    dialect: "mysql"
+    dialect: 'mysql'
     };
     module.exports = config;
     

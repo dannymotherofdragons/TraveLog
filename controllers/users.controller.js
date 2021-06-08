@@ -1,5 +1,5 @@
 // get resource model (definition and DB operations)
-const db = require('../models/users.models.js');
+const db = require('../models/db.js');
 
 const users = db.user;
 
@@ -7,6 +7,18 @@ const users = db.user;
 const {
     Op
 } = require('sequelize');
+
+exports.getLoggedUser = async (req, res) => {
+    Users.findOne({where: {id: req.params.userID}})
+        .then(data => {
+            res.status(200).json(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving tutorials."
+            });
+        })
+}
 
 
 // EXPORT function to display list of all users
@@ -28,7 +40,7 @@ exports.createUser = (req, res) => {
         .then(data => {
             res.status(201).json({
                 message: "created successfully!",
-                location: "/user/" + data.userID
+                location: "/users/" + data.userID
             });
 
         })
