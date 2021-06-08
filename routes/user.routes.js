@@ -16,7 +16,7 @@ userRouter.use((req, res, next) => {
 })
 
 userRouter.get('/', authController.verifyToken, userController.getAllUsers)
-userRouter.post('/', userController.createUser)
+userRouter.post('/', authController.verifyToken, userController.createUser)
 
 userRouter.delete('/:userID', userController.deleteUser)
 userRouter.put('/:userID', authController.verifyToken, userController.updateUser)

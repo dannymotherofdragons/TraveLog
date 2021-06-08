@@ -25,7 +25,6 @@ exports.signin = async (req, res) => {
 
         if (
             !passwordIsValid
-            // req.body.user_password != user.user_password
         ) {
             return res.status(401).json({
                 accessToken: null,

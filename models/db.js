@@ -30,6 +30,7 @@ db.gadget = require("./gadget.models.js")(sequelize, Sequelize);
 db.likes = require("./likes.models.js")(sequelize, Sequelize);
 db.tags = require("./tags.models.js")(sequelize, Sequelize);
 db.comment = require("./comment.models.js")(sequelize, Sequelize);
+db.subject = require("./subject.models.js")(sequelize, Sequelize);
 
 
 db.user.belongsToMany(db.comment, {

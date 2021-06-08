@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     const gadget = sequelize.define("gadget", {
+        gadgetID:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         gadgetName: {
             type: DataTypes.STRING,
             allowNull: false
@@ -8,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        class: {
+        subject: {
             type: DataTypes.STRING,
             allowNull: false
         },
