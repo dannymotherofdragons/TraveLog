@@ -17,13 +17,14 @@ gadgetsRouter.use((req, res, next) => {
 
 gadgetsRouter.route('/')
     .get(gadgetsController.getAllGadgets)
+    .post(gadgetsController.createGadget)
 
 //send a predefined error message for invalid routes on users
-gadgetsRouter.all('*', function (req, res) {
-    res.status(404).json({
+//gadgetsRouter.all('*', function (req, res) {
+  //  res.status(404).json({
         message: 'gadgets: ???'
-    });
-})
+    //});
+//})
 
 // EXPORT ROUTES (required by APP)
 module.exports = gadgetsRouter;

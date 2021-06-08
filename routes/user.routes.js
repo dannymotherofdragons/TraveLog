@@ -15,11 +15,15 @@ userRouter.use((req, res, next) => {
     next()
 })
 
-userRouter.get('/', authController.verifyToken, userController.getAllUsers)
+/*userRouter.get('/', authController.verifyToken, userController.getAllUsers)
 userRouter.post('/', authController.verifyToken, userController.createUser)
 
-userRouter.delete('/:userID', userController.deleteUser)
-userRouter.put('/:userID', authController.verifyToken, userController.updateUser)
+userRouter.delete('/:userID', userController.deleteUser)*/
+
+userRouter.route('/:userId')
+    .get(authController.verifyToken, authController.isProfOrLogged, userController.getLoggedUser)
+    .put(authController.verifyToken, authController.isProfOrLogged, userController.updateUser)
+    .delete(authController.verifyToken, authController.isProfOrLogged, userController.deleteUser)
 /*
 // Routes 127.1.0.0:8080/user/
 userRouter.route('/')

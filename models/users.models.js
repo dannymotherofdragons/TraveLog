@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        userType: {
+        isProf:{
             type: DataTypes.BOOLEAN,
             allowNull: false
         }

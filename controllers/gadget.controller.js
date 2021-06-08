@@ -7,14 +7,6 @@ const comments = db.comments;
 const subjects = db.subject;
 const tags = db.tags;
 
-// Sequelize operator
-const {
-    Op
-} = require('sequelize');
-const {
-    gadget
-} = require("../gadget.models/db.js");
-
 
 exports.getAllGadgets = (req, res) => {
     gadgets.findAll()
@@ -51,7 +43,7 @@ exports.getGadget = (req, res) => {
         })
 }
 
-// Function used to create a tool
+// Function used to create a gadget
 exports.createGadget = (req, res) => {
     gadgets.create({
             gadgetName: req.body.gadgetName,
@@ -230,40 +222,35 @@ exports.getAllSubjects = (req, res) => {
         })
 }
 
+
 // Function used to create a subject
 exports.createSubject = async (req, res) => {
-    let subject = await subjects.findOne({
-        where: {
-            subjectName: req.body.subjectName
-        }
-    })
+    let subject = await subjects.findOne({where: {subjectID: req.body.subjectID}})
     if (subject === null) {
         subjects.create({
-                subjectName: req.body.subjectName,
-            })
-            .then(data => {
-                res.status(201).json({
-                    message: "New subject created.",
-                    location: "/subjects/" + data.subjectID
-                });
-
-            })
-            .catch(err => {
-                if (err.name === 'SequelizeValidationError')
-                    res.status(400).json({
-                        message: err.errors[0].message
-                    });
-                else
-                    res.status(500).json({
-                        message: err.message || "Some error occurred while creating the Subject."
-                    });
-            });
-    } else {
-        res.status(200).json({
-            message: "Subject already created"
+            subjectName: req.body.subjectName
         })
+        .then(data => {
+            res.status(201).json({
+                message: "New Subject created.",
+                location: "/subjects/" + data.subject_id
+            });
+    
+        })
+        .catch(err => {
+            if (err.subjectN-name === 'SequelizeValidationError')
+                res.status(400).json({
+                    message: err.errors[0].message
+                });
+            else
+                res.status(500).json({
+                    message: err.message || "Some error occurred while creating the Subject."
+                });
+        });
+    } else {
+        res.status(200).json({message: "Subject already created"})
     }
-
+    
 }
 
 // Function used to delete a subject

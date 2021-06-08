@@ -11,12 +11,6 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     dialect: dbConfig.dialect,
 });
 
-const db = {};
-
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-
-
 sequelize.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
@@ -24,6 +18,11 @@ sequelize.authenticate()
     .catch(err => {
         console.error('Unable to connect to the database:', err);
     });
+
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
 db.user = require("./users.models.js")(sequelize, Sequelize);
 db.gadget = require("./gadget.models.js")(sequelize, Sequelize);
@@ -43,5 +42,9 @@ db.user.belongsToMany(db.tags, {
 db.user.belongsToMany(db.likes, {
     through: db.likes
 });
+
+/*db.user.belongsToMany(db.userType, {
+    through: db.userType
+});*/
 
 module.exports = db;

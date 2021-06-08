@@ -5,12 +5,11 @@ const bcrypt = require("bcryptjs");
 const config = require("../config/auth.config.js");
 
 // Call database tables
-const users = db.user;
+const Users = db.user;
 
-// Function used to get all tools
 exports.signin = async (req, res) => {
     try {
-        let user = await users.findOne({
+        let user = await Users.findOne({
             where: {
                 email: req.body.email
             }
@@ -18,7 +17,6 @@ exports.signin = async (req, res) => {
         if (!user) return res.status(404).json({
             message: "User Not found."
         });
-        // tests a string (password in body) against a hash (password in database)
         const passwordIsValid = await bcrypt.compareSync(
             req.body.password, user.password.toString()
         );
@@ -32,28 +30,23 @@ exports.signin = async (req, res) => {
             });
         }
 
-
-
-
-        // sign the given payload (user ID) into a JWT payload – builds JWT token, using secret key
         const token = jwt.sign({
             id: user.userID
         }, config.secret, {
-            expiresIn: 86400 // 24 hours
+            expiresIn: 86400
         });
 
-        let userType;
-        if (user.userType === true)
-            userType = "professor"
+        let isProf;
+        if (user.isProf === true)
+            role = "professor"
         else
-            userType = "aluno"
+            role = "aluno"
 
-        // Return
         return res.status(200).json({
             id: user.userID,
             username: user.username,
             email: user.email,
-            userType: userType,
+            role: isProf,
             accessToken: token
         });
     } catch (err) {
@@ -66,22 +59,20 @@ exports.signin = async (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        // check duplicate user
-        let user = await users.findOne({
+        let user = await Users.findOne({
             where: {
-                email : req.body.email
+                email: req.body.email
             }
         });
         if (user)
             return res.status(400).json({
                 message: "Failed! Email is already in use!"
             });
-        // save User to database
-        user = await users.create({
+        user = await Users.create({
             username: req.body.username,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 8), // generates hash to password
-            userType: false,
+            password: bcrypt.hashSync(req.body.password, 8),
+            isProf: false,
         });
 
         return res.json({
@@ -101,15 +92,38 @@ exports.verifyToken = (req, res, next) => {
             message: "No token provided!"
         });
     }
-    // verify request token given the JWT secret key
+
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
             return res.status(401).send({
                 message: "Unauthorized!"
             });
         }
-        req.loggedUserId = decoded.id; // save user ID for future verifications
+        req.loggedUserId = decoded.id;
         next();
     });
-    
+};
+
+
+exports.isProf = async (req, res, next) => {
+    let user = await Users.findByPk(req.loggedUserID);
+    console.log(user.user_type_id)
+    if (user.isProf === true) {
+        next();
+        return;
+    }
+    return res.status(403).send({
+        message: "Require Admin Role!"
+    })
+};
+
+exports.isProfOrLogged = async (req, res, next) => {
+    let user = await Users.findByPk(req.loggedUserID);
+    if (user.isProf === true || user.userID === parseInt(req.params.userID)){
+        next();
+        return;
+    }
+    return res.status(403).send({
+        message: "Require prof Role!"
+    });
 };

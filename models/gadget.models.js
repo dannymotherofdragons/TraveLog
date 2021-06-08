@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
             reference: {
                 model: 'likes.models',
                 key: 'likeID'
-            }
+            }, 
+            allowNull: true
         }
     });
 

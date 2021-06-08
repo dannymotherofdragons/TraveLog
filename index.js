@@ -40,6 +40,10 @@ app.use('/users', require('./routes/user.routes'));
 // call routes 127.1.0.0:8080/tool
 app.use('/gadget', require('./routes/gadgets.routes'));
 
+app.use('/auth', require('./routes/auth.routes'));
+
+app.use('/prof', require('./routes/prof.routes'));
+
 /*
 // response to unexpected request
 app.get('*', function (req, res) {
