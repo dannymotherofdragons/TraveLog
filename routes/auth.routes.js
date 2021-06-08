@@ -26,11 +26,11 @@ router.route('/signup')
 
 
 // Route that responds to any other request that is not accounted
-router.all('*', function (req, res) {
+/*router.all('*', function (req, res) {
     res.status(404).json({
         message: 'Auth: what???'
     });
-})
+}*/
 
 // Export tools router
 module.exports = router;

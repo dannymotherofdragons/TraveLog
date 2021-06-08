@@ -9,7 +9,7 @@ const {
 } = require('sequelize');
 
 exports.getLoggedUser = async (req, res) => {
-    Users.findOne({where: {id: req.params.userID}})
+    Users.findOne({where: {userID: req.params.userID}})
         .then(data => {
             res.status(200).json(data);
         })
@@ -46,7 +46,7 @@ exports.createUser = (req, res) => {
         })
         .catch(err => {
             // user model as validation for the title column (not null)
-            if (err.name === 'SequelizeValidationError')
+            if (err.username === 'SequelizeValidationError')
                 res.status(400).json({
                     message: err.errors[0].message
                 });
@@ -61,13 +61,13 @@ exports.createUser = (req, res) => {
 // Function used to update a user based on his id
 exports.updateUser = (req, res) => {
     users.update({
-            name: req.body.name,
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password,
             userType: req.body.userType,
         }, {
             where: {
-                id: req.params.userID
+                userID: req.params.userID
             }
         })
         .then(data => {
@@ -93,13 +93,13 @@ exports.updateUser = (req, res) => {
 exports.deleteUser = (req, res) => {
     users.destroy({
             where: {
-                id: req.params.id
+                userID: req.params.userID
             }
         })
         .then(num => {
             if (num == 0) {
                 res.status(200).json({
-                    message: `No User with id: ${req.params.id} was found on the database.`
+                    message: `No User with id: ${req.params.userID} was found on the database.`
                 });
                 return;
             }

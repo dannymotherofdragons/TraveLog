@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const config = require("../config/auth.config.js");
 
 // Call database tables
-const users = db.users;
+const users = db.user;
 
 // Function used to get all tools
 exports.signin = async (req, res) => {
@@ -32,6 +32,9 @@ exports.signin = async (req, res) => {
                 message: "Invalid Password!"
             });
         }
+
+
+
 
         // sign the given payload (user ID) into a JWT payload – builds JWT token, using secret key
         const token = jwt.sign({
@@ -64,10 +67,10 @@ exports.signin = async (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        // check duplicate username
+        // check duplicate user
         let user = await users.findOne({
             where: {
-                email: req.body.email
+                email : req.body.email
             }
         });
         if (user)
@@ -76,10 +79,10 @@ exports.signup = async (req, res) => {
             });
         // save User to database
         user = await users.create({
-            name: req.body.user_name,
-            email: req.body.user_email,
+            username: req.body.username,
+            email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8), // generates hash to password
-            isProfessor: false,
+            userType: false,
         });
 
         return res.json({

@@ -3,6 +3,7 @@ const express = require('express');
 let userRouter = express.Router();
 
 const userController = require('../controllers/users.controller.js');
+const authController = require('../controllers/auth.controller.js');
 
 // middleware for all routes related with users
 userRouter.use((req, res, next) => {
@@ -14,6 +15,11 @@ userRouter.use((req, res, next) => {
     next()
 })
 
+userRouter.get('/', authController.verifyToken, userController.getAllUsers)
+userRouter.post('/', userController.createUser)
+
+userRouter.delete('/:userID', userController.deleteUser)
+userRouter.put('/:userID', authController.verifyToken, userController.updateUser)
 /*
 // Routes 127.1.0.0:8080/user/
 userRouter.route('/')
@@ -27,11 +33,7 @@ userRouter.route('/:userID')
     .delete(userController.deleteUser)
     .put(userController.updateUser)
 */
-userRouter.get('/', userController.getAllUsers)
-userRouter.post('/', userController.createUser)
 
-userRouter.delete('/:userID', userController.deleteUser)
-userRouter.put('/:userID', userController.updateUser)
 // unexpected
 /*userRouter.all('*', function (req, res) {
     res.status(404).json({
