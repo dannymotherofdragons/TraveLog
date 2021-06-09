@@ -36,17 +36,17 @@ exports.signin = async (req, res) => {
             expiresIn: 86400
         });
 
-        let isProf;
-        if (user.isProf === true)
+        /*let isProf;
+        if (user.prof === true)
             role = "professor"
         else
             role = "aluno"
-
+          */  
         return res.status(200).json({
             id: user.userID,
             username: user.username,
             email: user.email,
-            role: isProf,
+            //role: prof,
             accessToken: token
         });
     } catch (err) {
@@ -72,7 +72,7 @@ exports.signup = async (req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8),
-            isProf: false,
+            //prof: req.body.prof,
         });
 
         return res.json({
@@ -105,10 +105,9 @@ exports.verifyToken = (req, res, next) => {
 };
 
 
-exports.isProf = async (req, res, next) => {
+/*exports.isProf = async (req, res, next) => {
     let user = await Users.findByPk(req.loggedUserID);
-    console.log(user.user_type_id)
-    if (user.isProf === true) {
+    if (user.prof === true) {
         next();
         return;
     }
@@ -119,11 +118,11 @@ exports.isProf = async (req, res, next) => {
 
 exports.isProfOrLogged = async (req, res, next) => {
     let user = await Users.findByPk(req.loggedUserID);
-    if (user.isProf === true || user.userID === parseInt(req.params.userID)){
+    if (user.prof === true || user.userID === parseInt(req.params.userID)){
         next();
         return;
     }
     return res.status(403).send({
         message: "Require prof Role!"
     });
-};
+};*/

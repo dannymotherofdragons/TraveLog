@@ -17,7 +17,7 @@ exports.getLoggedUser = async (req, res) => {
             }
         })
         .then(data => {
-            if (user.userID === data.user_id || user.isProf === ture) {
+            if (user.userID === data.user_id || user.prof === ture) {
                 res.status(200).json(data);
                 return;
             }
@@ -53,13 +53,12 @@ exports.createUser = async (req, res) => {
             email: req.body.email
         }
     })
-    console.log(user)
     if (user === null) {
         users.create({
                 username: req.body.username,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 8), // generates hash to password
-                isProf: req.body.isProf,
+                prof: req.body.prof,
             })
             .then(data => {
                 res.status(201).json({
@@ -89,17 +88,17 @@ exports.createUser = async (req, res) => {
 // Function used to update a user based on his id
 exports.updateUser = async (req, res) => {
     const user = await users.findByPk(req.loggedUserId)
-    let isProf;
-    if (user.isProf === true) {
-        isProf = req.body.isProf
+    let prof;
+    if (user.prof === true) {
+        prof = req.body.prof
     } else {
-        isProf = user.isProf
+        prof = user.prof
     }
     users.update({
             username: req.body.username,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8),
-            isProf: isProf,
+            prof: prof,
         }, {
             where: {
                 userID: req.params.userID

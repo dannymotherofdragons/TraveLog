@@ -54,14 +54,3 @@ app.get('*', function (req, res) {
 */
 // start server
 app.listen(port, host, () => console.log(`App listening at http://${host}:${port}/`));
-
-(async () =>{
-    await sequelize.sync();
-    const Gloria = await user.createUser({
-        username: 'Gloria123',
-        email: 'gloria123@gmail.com',
-        password: 'solgaleo',
-        userType: false
-    });
-    console.log(Gloria.ToJSON());
-})

@@ -1,23 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const comment = sequelize.define("comment", {
-        commentID: {
+    const comments = sequelize.define("comments", {
+        commentID: {   // Identifier of each comment
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        commentText:{
+        commentDescription: { // The comment itself
             type: DataTypes.STRING,
             allowNull: false
-        },
-        userWhoPosted:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            reference:{
-                model: 'users',
-                key: 'userID'
-            }
         }
     });
-
-    return comment;
+    return comments;
 }

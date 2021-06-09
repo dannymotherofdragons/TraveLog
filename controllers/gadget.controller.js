@@ -1,13 +1,14 @@
+// Get database info
 const db = require("../models/db.js");
 
 // Call database tables
 const gadgets = db.gadget;
-const likes = db.likes;
 const comments = db.comments;
+const gadgetComments = db.gadgetComments;
+const UserToolLike = db.user_tool_like;
 const subjects = db.subject;
-const tags = db.tags;
 
-
+// Function used to get all gadgets
 exports.getAllGadgets = (req, res) => {
     gadgets.findAll()
         .then(data => {
@@ -21,7 +22,7 @@ exports.getAllGadgets = (req, res) => {
 }
 
 // Function used to get one tool
-exports.getGadget = (req, res) => {
+exports.getOneGadget = (req, res) => {
     gadgets.findOne({
             where: {
                 gadgetID: req.params.gadgetID
@@ -30,7 +31,7 @@ exports.getGadget = (req, res) => {
         .then(data => {
             if (data === null) {
                 res.status(200).json({
-                    message: `Gadget id: ${req.params.gadgetID} doesn't exist!`
+                    message: `Tool with id: ${req.params.gadgetID} doesn't exist!`
                 });
                 return;
             }
@@ -38,33 +39,34 @@ exports.getGadget = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving gdgt."
+                message: err.message || "Some error occurred while retrieving tool."
             });
         })
 }
 
-// Function used to create a gadget
+// Function used to create a tool
 exports.createGadget = (req, res) => {
     gadgets.create({
             gadgetName: req.body.gadgetName,
-            tags: req.body.tags,
-            subject: req.body.subject
+            gadgetDescription: req.body.gadgetDescription,
+            tags: req.body.tags
+
         })
         .then(data => {
             res.status(201).json({
-                message: "gadget created.",
+                message: "New gadget created.",
                 location: "/gadgets/" + data.gadgetID
             });
 
         })
         .catch(err => {
-            if (err.name === 'SequelizeValidationError')
+            if (err.gadgetName === 'SequelizeValidationError')
                 res.status(400).json({
                     message: err.errors[0].message
                 });
             else
                 res.status(500).json({
-                    message: err.message || "Some error occurred while creating gadget."
+                    message: err.message || "Some error occurred while creating the Tool."
                 });
         });
 }
@@ -73,8 +75,8 @@ exports.createGadget = (req, res) => {
 exports.updateGadget = (req, res) => {
     gadgets.update({
             gadgetName: req.body.gadgetName,
-            tags: req.body.tags,
-            subject: req.body.subject
+            gadgetDescription: req.body.gadgetDescription,
+            tags: req.body.tags
         }, {
             where: {
                 gadgetID: req.params.gadgetID
@@ -83,17 +85,17 @@ exports.updateGadget = (req, res) => {
         .then(data => {
             if (data[0] === 0) {
                 res.status(200).json({
-                    message: "gadget not found with id."
+                    message: "No gadget was found with this id."
                 })
                 return;
             }
             res.status(200).json({
-                message: "gadget updated"
+                message: "gadget updated with success!"
             })
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "some error ocurred while updating."
+                message: err.message || "Some error ocurred while updating gadget."
             })
         });
 }
@@ -108,12 +110,12 @@ exports.deleteGadget = (req, res) => {
         .then(num => {
             if (num == 0) {
                 res.status(200).json({
-                    message: `No id: ${req.params.gadgetID} was found on the database.`
+                    message: `No Gadget with id: ${req.params.gadgetID} was found on the database.`
                 });
                 return;
             }
             res.status(200).json({
-                message: "deleted."
+                message: "Tool deleted with success."
             });
         })
         .catch(err => {
@@ -126,10 +128,10 @@ exports.deleteGadget = (req, res) => {
 // Function used to create a comment
 exports.createComment = (req, res) => {
     comments.create({
-            commentText: req.body.comment
+            commentDescription: req.body.commentDescription
         })
         .then(data => {
-            comment.create({
+            gadgetComments.create({
                     gadgetID: req.params.gadgetID,
                     commentID: data.commentID,
                     userID: req.loggedUserId
@@ -142,103 +144,145 @@ exports.createComment = (req, res) => {
                     return;
                 })
                 .catch(err => {
-                    if (err.username === 'SequelizeValidationError')
+                    if (err.name === 'SequelizeValidationError')
                         res.status(400).json({
                             message: err.errors[0].message
                         });
                     else
                         res.status(500).json({
-                            message: err.message || "some error occurred while creating comment."
+                            message: err.message || "Some error occurred while creating the Comment."
                         });
                 });
         })
         .catch(err => {
-            if (err.username === 'SequelizeValidationError')
+            if (err.name === 'SequelizeValidationError')
                 res.status(400).json({
                     message: err.errors[0].message
                 });
             else
                 res.status(500).json({
-                    message: err.message || "some error occurred while creating."
+                    message: err.message || "Some error occurred while creating the Comment."
                 });
         });
 };
 
+// Function user for a user to give a like/deslike to a tool
+exports.leaveLike = (req, res) => {
+    UserToolLike.findOne({
+            where: {
+                user_id: req.loggedUserId,
+                tool_id: req.params.toolId
+            }
+        })
+        .then(data => {
+            if (data === null) {
+                UserToolLike.create({
+                        user_id: req.loggedUserId,
+                        tool_id: req.params.toolId,
+                        like_desc: req.body.like
+                    })
+                    .then(data2 => {
+                        res.status(200).json(data2);
+                    })
+                    .catch(err => {
+                        if (err.name === 'SequelizeValidationError')
+                            res.status(400).json({
+                                message: err.errors[0].message
+                            });
+                        else
+                            res.status(500).json({
+                                message: err.message || "Some error occurred while giving a like/deslike."
+                            });
+                    });
+            }
+            res.status(200).json({
+                message: "Like/Deslike already given!"
+            })
+        })
+        .catch(err => {
+            if (err.name === 'SequelizeValidationError')
+                res.status(400).json({
+                    message: err.errors[0].message
+                });
+            else
+                res.status(500).json({
+                    message: err.message || "Some error occurred while giving a like/deslike."
+                });
+        });
+};
 
 // Function used to get all comments
-exports.getAllComments = (req, res) => {
-    comments.findAll()
+exports.getComments = (req, res) => {
+    Comments.findAll()
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "error"
+                message: err.message || "Some error occurred while retrieving Comments."
             });
         })
 }
 
 // Function used to delete a comment
 exports.deleteComment = (req, res) => {
-    comments.destroy({
+    ToolComments.destroy({
             where: {
-                commentID: req.params.commentID
+                comment_id: req.params.commentId
             }
         })
         .then(num => {
             if (num != 0) {
-                comments.destroy({
+                Comments.destroy({
                     where: {
-                        commentID: req.params.commentID
+                        comment_id: req.params.commentId
                     }
                 }).then(
-                    res.status(200).json({
-                        message: "Comment deleted with sucess!"
-                    })
+                    res.status(200).json({message: "Comment deleted with sucess!"})
                 )
                 return;
             }
             res.status(200).json({
-                message: `No comment with id: ${req.params.commentID} was found on the database.`
+                message: `No Comment with id: ${req.params.commentId} was found on the database.`
             });
-        })
+        }
+        )
         .catch(err => {
             res.status(500).send({
-                message: err.message || 'Some error ocurred while trying to delete.'
+                message: err.message || 'Some error ocurred while trying to delete Comment.'
             })
         })
 }
-
 // Function used to get all subjects
 exports.getAllSubjects = (req, res) => {
-    subjects.findAll()
+    Subjects.findAll()
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "error."
+                message: err.message || "Some error occurred while retrieving Subjects."
             });
         })
 }
 
-
 // Function used to create a subject
 exports.createSubject = async (req, res) => {
-    let subject = await subjects.findOne({where: {subjectID: req.body.subjectID}})
-    if (subject === null) {
+    let sub = await subjects.findOne({where: {subjectDescription: req.body.subjectDescription}})
+    if (sub === null) {
         subjects.create({
+            subjectDescription: req.body.subjectDescription,
             subjectName: req.body.subjectName
         })
         .then(data => {
             res.status(201).json({
                 message: "New Subject created.",
-                location: "/subjects/" + data.subject_id
+                location: "/subjects/" + data.subjectID
             });
     
         })
         .catch(err => {
-            if (err.subjectN-name === 'SequelizeValidationError')
+            if (err.name === 'SequelizeValidationError')
                 res.status(400).json({
                     message: err.errors[0].message
                 });
@@ -256,24 +300,25 @@ exports.createSubject = async (req, res) => {
 // Function used to delete a subject
 exports.deleteSubject = (req, res) => {
     subjects.destroy({
-            where: {
-                subjectName: req.params.subjectName
-            }
-        })
-        .then(num => {
-            if (num != 0) {
-                res.status(200).json({
-                    message: "deleted"
-                })
-                return;
-            }
+        where: {
+            subjectID: req.params.subjectID
+        }
+    })
+    .then(num => {
+        if (num != 0) {
             res.status(200).json({
-                message: `No subject with this name: ${req.params.subjectName} was found on the database.`
-            });
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || 'error deleting'
+                message: "Subject deleted with success"
             })
+            return;
+        }
+        res.status(200).json({
+            message: `No Subject with id: ${req.params.subjectID} was found on the database.`
+        });
+    }
+    )
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error ocurred while trying to delete Subject.'
         })
+    })
 }

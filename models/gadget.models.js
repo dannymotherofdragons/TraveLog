@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const gadget = sequelize.define("gadget", {
-        gadgetID:{
+        gadgetID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -9,23 +9,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        gadgetDescription: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         tags: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        subject: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        like: {
-            type: DataTypes.INTEGER,
-            reference: {
-                model: 'likes.models',
-                key: 'likeID'
-            }, 
-            allowNull: true
         }
     });
-
     return gadget;
 };

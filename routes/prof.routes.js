@@ -21,38 +21,38 @@ router.use((req, res, next) => {
 })
 
 router.route('/users')
-    .get(authController.verifyToken, authController.isProf, usersController.getAllUsers)
-    .post(authController.verifyToken, authController.isProf, usersController.createUser)
+    .get(authController.verifyToken, usersController.getAllUsers)
+    .post(authController.verifyToken, usersController.createUser)
 
 router.route('/users/:userID')
-    .delete(authController.verifyToken, authController.isProf, usersController.deleteUser)
-    .put(authController.verifyToken, authController.isProf, usersController.updateUser)
+    .delete(authController.verifyToken, usersController.deleteUser)
+    .put(authController.verifyToken, usersController.updateUser)
 
 router.route('/gadgets')
-    .get(authController.verifyToken, authController.isProf, gadgetsController.getAllGadgets)
-    .post(authController.verifyToken, authController.isProf, gadgetsController.createGadget)
+    .get(authController.verifyToken, gadgetsController.getAllGadgets)
+    .post(authController.verifyToken, gadgetsController.createGadget)
 
 //router.route('/gadgets/comments')
-  //  .get(authController.verifyToken, authController.isProf, gadgetsController.getComments)
+  //  .get(authController.verifyToken, gadgetsController.getComments)
 
 router.route('/gadgets/comments/:commentID')
-    .delete(authController.verifyToken, authController.isProf, gadgetsController.deleteComment)
+    .delete(authController.verifyToken, gadgetsController.deleteComment)
 
 //router.route('/gadgets/:gadgetID')
-  //  .get(authController.verifyToken, authController.isProf, gadgetsController.getOnegadget)
-    //.put(authController.verifyToken, authController.isProf, gadgetsController.updategadget)
-    //.delete(authController.verifyToken, authController.isProf, gadgetsController.deletegadget)
+  //  .get(authController.verifyToken, gadgetsController.getOnegadget)
+    //.put(authController.verifyToken, gadgetsController.updategadget)
+    //.delete(authController.verifyToken, gadgetsController.deletegadget)
 
 
 router.route('/gadgets/:gadgetID/comments')
-    .post(authController.verifyToken, authController.isProf, gadgetsController.createComment)
+    .post(authController.verifyToken, gadgetsController.createComment)
 
 router.route('/subjects')
-    .get(authController.verifyToken, authController.isProf, gadgetsController.getAllSubjects)
-    .post(authController.verifyToken, authController.isProf, gadgetsController.createSubject)
+    .get(authController.verifyToken, gadgetsController.getAllSubjects)
+    .post(authController.verifyToken, gadgetsController.createSubject)
 
 router.route('/subjects/:subjectID')
-    .delete(authController.verifyToken, authController.isProf, gadgetsController.deleteSubject);
+    .delete(authController.verifyToken, gadgetsController.deleteSubject);
 
 
 // Route that responds to any other request that is not accounted
