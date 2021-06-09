@@ -50,10 +50,10 @@ const gadgets = db.gadget;
     };
 
 
-};/*
+};*/
 
 // Function used to get all gadgets
-/*exports.getAllGadgets = (req, res) => {
+exports.getAllGadgets = (req, res) => {
     gadgets.findAll()
         .then(data => {
             res.status(200).json(data);
@@ -69,13 +69,13 @@ const gadgets = db.gadget;
 exports.getOneGadget = (req, res) => {
     gadgets.findOne({
             where: {
-                gadgetID: req.params.gadgetID
+                gadgetName: req.params.gadgetName
             }
         })
         .then(data => {
             if (data === null) {
                 res.status(200).json({
-                    message: `Tool with id: ${req.params.gadgetID} doesn't exist!`
+                    message: `Tool with name: ${req.params.gadgetName} doesn't exist!`
                 });
                 return;
             }
@@ -86,7 +86,7 @@ exports.getOneGadget = (req, res) => {
                 message: err.message || "Some error occurred while retrieving tool."
             });
         })
-}*/
+}
 
 //Function used to create a tool
 exports.createGadget = (req, res) => {
@@ -145,16 +145,16 @@ exports.createGadget = (req, res) => {
 }
 
 // Function used to delete a tool
-exports.deleteGadget = (req, res) => {
+*/exports.deleteGadget = (req, res) => {
     gadgets.destroy({
             where: {
-                gadgetID: req.params.gadgetID
+                gadgetName: req.params.gadgetName
             }
         })
         .then(num => {
             if (num == 0) {
                 res.status(200).json({
-                    message: `No Gadget with id: ${req.params.gadgetID} was found on the database.`
+                    message: `No Gadget with id: ${req.params.gadgetName} was found on the database.`
                 });
                 return;
             }
@@ -168,7 +168,7 @@ exports.deleteGadget = (req, res) => {
             })
         })
 }
-
+/*
 // Function used to create a comment
 exports.createComment = (req, res) => {
     comments.create({
