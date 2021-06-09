@@ -28,7 +28,7 @@ router.route('/users/:userID')
     .delete(authController.verifyToken, usersController.deleteUser)
     .put(authController.verifyToken, usersController.updateUser)
 
-router.route('/gadgets')
+/*router.route('/gadgets')
     .get(authController.verifyToken, gadgetsController.getAllGadgets)
     .post(authController.verifyToken, gadgetsController.createGadget)
 
@@ -52,7 +52,7 @@ router.route('/subjects')
     .post(authController.verifyToken, gadgetsController.createSubject)
 
 router.route('/subjects/:subjectID')
-    .delete(authController.verifyToken, gadgetsController.deleteSubject);
+    .delete(authController.verifyToken, gadgetsController.deleteSubject);*/
 
 
 // Route that responds to any other request that is not accounted

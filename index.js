@@ -38,7 +38,7 @@ app.get('/', function (req, res) {
 app.use('/users', require('./routes/user.routes'));
 
 // call routes 127.1.0.0:8080/tool
-app.use('/gadget', require('./routes/gadgets.routes'));
+app.use('/gadgets', require('./routes/gadgets.routes'));
 
 app.use('/auth', require('./routes/auth.routes'));
 

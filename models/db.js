@@ -26,10 +26,10 @@ db.sequelize = sequelize;
 
 db.user = require("./users.models.js")(sequelize, Sequelize);
 db.gadget = require("./gadget.models.js")(sequelize, Sequelize);
-db.gadgetComments = require("./gadgets_comments.models.js")(sequelize, Sequelize);
-db.comment = require("./comment.models.js")(sequelize, Sequelize);
-db.likes = require("./likes.models.js")(sequelize, Sequelize);
-db.tags = require("./tags.models.js")(sequelize, Sequelize);
-db.subject = require("./subject.models.js")(sequelize, Sequelize);
+//db.gadget_comments = require("./gadgets_comments.models.js")(sequelize, Sequelize);
+//db.comment = require("./comment.models.js")(sequelize, Sequelize);
+//db.likes = require("./likes.models.js")(sequelize, Sequelize);
+//db.tags = require("./tags.models.js")(sequelize, Sequelize);
+//db.subject = require("./subject.models.js")(sequelize, Sequelize);
 
 module.exports = db;

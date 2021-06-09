@@ -3,13 +3,57 @@ const db = require("../models/db.js");
 
 // Call database tables
 const gadgets = db.gadget;
-const comments = db.comments;
-const gadgetComments = db.gadgetComments;
-const UserToolLike = db.user_tool_like;
-const subjects = db.subject;
+//const comments = db.comments;
+//const gadget_comments = db.gadget_comments;
+//const subjects = db.subject;
+
+
+// Function used to create a new user
+/*exports.createGadget = async (req, res) => {
+    try {
+        let gadget = await gadgets.findOne({
+            where: {
+                gadgetName: req.body.gadgetName
+            }
+        })
+
+        if (gadgetName === null) {
+            gadget = await gadgets.create({
+                    gadgetName: req.body.gadgetName,
+                    tags: req.body.tags
+                })
+                .then(data => {
+                    res.status(201).json({
+                        message: "New gadget created.",
+                        location: "/gadgets/" + data.gadgetName
+                    });
+
+                })
+                .catch(err => {
+                    // Tutorial model as validation for the title column (not null)
+                    if (err.gadgetName === 'SequelizeValidationError')
+                        res.status(400).json({
+                            message: err.errors[0].message
+                        });
+                    else
+                        res.status(500).json({
+                            message: err.message || "Some error occurred while creating the User."
+                        });
+                });
+        } else {
+            res.status(200).json("id is already in use")
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    };
+
+
+};/*
 
 // Function used to get all gadgets
-exports.getAllGadgets = (req, res) => {
+/*exports.getAllGadgets = (req, res) => {
     gadgets.findAll()
         .then(data => {
             res.status(200).json(data);
@@ -42,9 +86,9 @@ exports.getOneGadget = (req, res) => {
                 message: err.message || "Some error occurred while retrieving tool."
             });
         })
-}
+}*/
 
-// Function used to create a tool
+//Function used to create a tool
 exports.createGadget = (req, res) => {
     gadgets.create({
             gadgetName: req.body.gadgetName,
@@ -55,7 +99,7 @@ exports.createGadget = (req, res) => {
         .then(data => {
             res.status(201).json({
                 message: "New gadget created.",
-                location: "/gadgets/" + data.gadgetID
+                location: "/gadgets/" + data.gadgetName
             });
 
         })
@@ -72,7 +116,7 @@ exports.createGadget = (req, res) => {
 }
 
 // Function used to update a tool
-exports.updateGadget = (req, res) => {
+/*exports.updateGadget = (req, res) => {
     gadgets.update({
             gadgetName: req.body.gadgetName,
             gadgetDescription: req.body.gadgetDescription,
@@ -131,7 +175,7 @@ exports.createComment = (req, res) => {
             commentDescription: req.body.commentDescription
         })
         .then(data => {
-            gadgetComments.create({
+            gadget_comments.create({
                     gadgetID: req.params.gadgetID,
                     commentID: data.commentID,
                     userID: req.loggedUserId
@@ -321,4 +365,4 @@ exports.deleteSubject = (req, res) => {
             message: err.message || 'Some error ocurred while trying to delete Subject.'
         })
     })
-}
+}*/

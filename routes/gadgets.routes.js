@@ -16,7 +16,7 @@ gadgetsRouter.use((req, res, next) => {
 })
 
 gadgetsRouter.route('/')
-    .get(gadgetsController.getAllGadgets)
+    //.get(gadgetsController.getAllGadgets)
     .post(gadgetsController.createGadget)
 
 //send a predefined error message for invalid routes on users

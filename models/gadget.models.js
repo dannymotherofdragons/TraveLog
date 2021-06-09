@@ -1,22 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
     const gadget = sequelize.define("gadget", {
-        gadgetID: {
+        /*gadgetID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        },
+        },*/
         gadgetName: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        gadgetDescription: {
+        /*gadgetDescription: {
             type: DataTypes.STRING,
             allowNull: false
-        },
+        },*/
         tags: {
             type: DataTypes.STRING,
             allowNull: false
         }
     });
+
     return gadget;
 };
