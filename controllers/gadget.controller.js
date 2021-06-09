@@ -92,7 +92,7 @@ exports.getOneGadget = (req, res) => {
 exports.createGadget = (req, res) => {
     gadgets.create({
             gadgetName: req.body.gadgetName,
-            gadgetDescription: req.body.gadgetDescription,
+            //description: req.body.gadgetDescription,
             tags: req.body.tags
 
         })
@@ -116,20 +116,20 @@ exports.createGadget = (req, res) => {
 }
 
 // Function used to update a tool
-/*exports.updateGadget = (req, res) => {
+exports.updateGadget = (req, res) => {
     gadgets.update({
             gadgetName: req.body.gadgetName,
-            gadgetDescription: req.body.gadgetDescription,
+            //gadgetDescription: req.body.gadgetDescription,
             tags: req.body.tags
         }, {
             where: {
-                gadgetID: req.params.gadgetID
+                gadgetName: req.params.gadgetName
             }
         })
         .then(data => {
             if (data[0] === 0) {
                 res.status(200).json({
-                    message: "No gadget was found with this id."
+                    message: "No gadget was found with this name."
                 })
                 return;
             }
@@ -145,7 +145,7 @@ exports.createGadget = (req, res) => {
 }
 
 // Function used to delete a tool
-*/exports.deleteGadget = (req, res) => {
+exports.deleteGadget = (req, res) => {
     gadgets.destroy({
             where: {
                 gadgetName: req.params.gadgetName

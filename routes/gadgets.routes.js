@@ -22,6 +22,7 @@ gadgetsRouter.route('/')
 gadgetsRouter.route("/:gadgetName")
     .get(gadgetsController.getOneGadget)
     .delete(gadgetsController.deleteGadget)
+    .put(gadgetsController.updateGadget)
 
 //send a predefined error message for invalid routes on users
 //gadgetsRouter.all('*', function (req, res) {
