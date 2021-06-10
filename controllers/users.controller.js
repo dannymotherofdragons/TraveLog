@@ -8,16 +8,16 @@ const {
     Op
 } = require('sequelize');
 
-// Function used to get logged user
+
 exports.getLoggedUser = async (req, res) => {
-    let user = await users.findByPk(req.loggedUserId)
+    let user = await users.findByPk(req.loggedUserID)
     users.findOne({
             where: {
                 userID: req.params.userID
             }
         })
         .then(data => {
-            if (user.userID === data.user_id || user.prof === ture) {
+            if (user.userID === data.user_id || user.prof === true) {
                 res.status(200).json(data);
                 return;
             }
@@ -33,7 +33,7 @@ exports.getLoggedUser = async (req, res) => {
 }
 
 
-// EXPORT function to display list of all users
+
 exports.getAllUsers = (req, res) => {
     users.findAll()
         .then(data => {
@@ -46,7 +46,8 @@ exports.getAllUsers = (req, res) => {
         })
 };
 
-// Function used to create a new user
+
+
 exports.createUser = async (req, res) => {
     let user = await users.findOne({
         where: {
@@ -68,7 +69,6 @@ exports.createUser = async (req, res) => {
 
             })
             .catch(err => {
-                // Tutorial model as validation for the title column (not null)
                 if (err.username === 'SequelizeValidationError')
                     res.status(400).json({
                         message: err.errors[0].message
@@ -85,7 +85,6 @@ exports.createUser = async (req, res) => {
 };
 
 
-// Function used to update a user based on his id
 exports.updateUser = async (req, res) => {
     const user = await users.findByPk(req.loggedUserId)
     let prof;
@@ -123,7 +122,6 @@ exports.updateUser = async (req, res) => {
 }
 
 
-// Function used to delete a user based on his id
 exports.deleteUser = async (req, res) => {
     let user = await users.findByPk(req.params.userID)
     if (user) {
@@ -171,14 +169,14 @@ exports.isProf = (req, res) => {
         })
         .then(data => {
             if (data = req.body.isProf) {
-                if (data == 0) {
+                if (data == false) {
                     res.status(500).send({
                         message: err.message || 'You are not a professor.'
                     })
                     return;
                 }
 
-                if (data == 1) {
+                if (data == true) {
                     res.status(200).json({
                         message: 'Success.'
                     })

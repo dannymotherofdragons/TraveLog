@@ -3,10 +3,10 @@ module.exports = (sequelize, DataTypes) => {
         likeID:{
             type: DataTypes.INTEGER,
             primaryKey: true,
-            /*references: {
+            references: {
                 model: 'users',
                 key: 'userID'
-            }*/
+            }
 
         },
         

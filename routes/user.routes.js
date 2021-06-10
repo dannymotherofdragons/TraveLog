@@ -5,11 +5,10 @@ let userRouter = express.Router();
 const userController = require('../controllers/users.controller.js');
 const authController = require('../controllers/auth.controller.js');
 
-// middleware for all routes related with users
 userRouter.use((req, res, next) => {
     const start = Date.now();
-    res.on("finish", () => { //finish event is emitted once the response is sent to the client
-        const diffSeconds = (Date.now() - start) / 1000; //figure out how many seconds elapsed
+    res.on("finish", () => { 
+        const diffSeconds = (Date.now() - start) / 1000; 
         console.log(`${req.method} ${req.originalUrl} completed in ${diffSeconds} seconds`);
     });
     next()
@@ -24,6 +23,7 @@ userRouter.route('/:userID')
     .get(authController.verifyToken, userController.getLoggedUser)
     .put(authController.verifyToken, userController.updateUser)
     .delete(authController.verifyToken, userController.deleteUser)
+    
 /*
 // Routes 127.1.0.0:8080/user/
 userRouter.route('/')

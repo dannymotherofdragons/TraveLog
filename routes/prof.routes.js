@@ -28,9 +28,7 @@ router.route('/users/:userID')
     .delete(authController.verifyToken, usersController.deleteUser)
     .put(authController.verifyToken, usersController.updateUser)
 
-/*router.route('/gadgets')
-    .get(authController.verifyToken, gadgetsController.getAllGadgets)
-    .post(authController.verifyToken, gadgetsController.createGadget)
+/*
 
 //router.route('/gadgets/comments')
   //  .get(authController.verifyToken, gadgetsController.getComments)
@@ -38,29 +36,19 @@ router.route('/users/:userID')
 router.route('/gadgets/comments/:commentID')
     .delete(authController.verifyToken, gadgetsController.deleteComment)
 
-//router.route('/gadgets/:gadgetID')
-  //  .get(authController.verifyToken, gadgetsController.getOnegadget)
-    //.put(authController.verifyToken, gadgetsController.updategadget)
-    //.delete(authController.verifyToken, gadgetsController.deletegadget)
-
-
-router.route('/gadgets/:gadgetID/comments')
+router.route('/gadgets/:gadgetName/comments')
     .post(authController.verifyToken, gadgetsController.createComment)
-
-router.route('/subjects')
-    .get(authController.verifyToken, gadgetsController.getAllSubjects)
-    .post(authController.verifyToken, gadgetsController.createSubject)
 
 router.route('/subjects/:subjectID')
     .delete(authController.verifyToken, gadgetsController.deleteSubject);*/
 
 
-// Route that responds to any other request that is not accounted
+    
 router.all('*', function (req, res) {
     res.status(404).json({
         message: 'prof: what???'
     });
 })
 
-// Export gadgets router
+
 module.exports = router;

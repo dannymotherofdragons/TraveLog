@@ -1,14 +1,10 @@
-// Get database info
 const db = require("../models/db.js");
 
-// Call database tables
 const gadgets = db.gadget;
-//const comments = db.comments;
-//const gadget_comments = db.gadget_comments;
-//const subjects = db.subject;
+const comments = db.comments;
+const gadget_comments = db.gadget_comments;
+const subjects = db.subject;
 
-
-// Function used to create a new user
 /*exports.createGadget = async (req, res) => {
     try {
         let gadget = await gadgets.findOne({
@@ -52,7 +48,8 @@ const gadgets = db.gadget;
 
 };*/
 
-// Function used to get all gadgets
+
+
 exports.getAllGadgets = (req, res) => {
     gadgets.findAll()
         .then(data => {
@@ -65,7 +62,8 @@ exports.getAllGadgets = (req, res) => {
         })
 }
 
-// Function used to get one tool
+
+
 exports.getOneGadget = (req, res) => {
     gadgets.findOne({
             where: {
@@ -88,7 +86,8 @@ exports.getOneGadget = (req, res) => {
         })
 }
 
-//Function used to create a tool
+
+
 exports.createGadget = (req, res) => {
     gadgets.create({
             gadgetName: req.body.gadgetName,
@@ -115,7 +114,8 @@ exports.createGadget = (req, res) => {
         });
 }
 
-// Function used to update a tool
+
+
 exports.updateGadget = (req, res) => {
     gadgets.update({
             gadgetName: req.body.gadgetName,
@@ -144,7 +144,8 @@ exports.updateGadget = (req, res) => {
         });
 }
 
-// Function used to delete a tool
+
+
 exports.deleteGadget = (req, res) => {
     gadgets.destroy({
             where: {
@@ -168,23 +169,24 @@ exports.deleteGadget = (req, res) => {
             })
         })
 }
-/*
-// Function used to create a comment
+
+
 exports.createComment = (req, res) => {
     comments.create({
-            commentDescription: req.body.commentDescription
+            commentText: req.body.commentText
         })
         .then(data => {
             gadget_comments.create({
-                    gadgetID: req.params.gadgetID,
+                    gadgetName: req.params.gadgetName,
                     commentID: data.commentID,
-                    userID: req.loggedUserId
                 })
+                
                 .then(data2 => {
-                    res.status(201).json({
+                    res.status(201).json({                        
                         data,
                         data2
                     });
+                    
                     return;
                 })
                 .catch(err => {
@@ -194,7 +196,7 @@ exports.createComment = (req, res) => {
                         });
                     else
                         res.status(500).json({
-                            message: err.message || "Some error occurred while creating the Comment."
+                            message: err.message || "error."
                         });
                 });
         })
@@ -205,89 +207,44 @@ exports.createComment = (req, res) => {
                 });
             else
                 res.status(500).json({
-                    message: err.message || "Some error occurred while creating the Comment."
+                    message: err.message || "error."
                 });
         });
 };
 
-// Function user for a user to give a like/deslike to a tool
-exports.leaveLike = (req, res) => {
-    UserToolLike.findOne({
-            where: {
-                user_id: req.loggedUserId,
-                tool_id: req.params.toolId
-            }
-        })
-        .then(data => {
-            if (data === null) {
-                UserToolLike.create({
-                        user_id: req.loggedUserId,
-                        tool_id: req.params.toolId,
-                        like_desc: req.body.like
-                    })
-                    .then(data2 => {
-                        res.status(200).json(data2);
-                    })
-                    .catch(err => {
-                        if (err.name === 'SequelizeValidationError')
-                            res.status(400).json({
-                                message: err.errors[0].message
-                            });
-                        else
-                            res.status(500).json({
-                                message: err.message || "Some error occurred while giving a like/deslike."
-                            });
-                    });
-            }
-            res.status(200).json({
-                message: "Like/Deslike already given!"
-            })
-        })
-        .catch(err => {
-            if (err.name === 'SequelizeValidationError')
-                res.status(400).json({
-                    message: err.errors[0].message
-                });
-            else
-                res.status(500).json({
-                    message: err.message || "Some error occurred while giving a like/deslike."
-                });
-        });
-};
 
-// Function used to get all comments
 exports.getComments = (req, res) => {
-    Comments.findAll()
+    comments.findAll()
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving Comments."
+                message: err.message || "Some error occurred while retrieving comments."
             });
         })
 }
 
-// Function used to delete a comment
+
 exports.deleteComment = (req, res) => {
-    ToolComments.destroy({
+    gadget_comments.destroy({
             where: {
-                comment_id: req.params.commentId
+                commentID: req.params.commentID
             }
         })
         .then(num => {
             if (num != 0) {
-                Comments.destroy({
+                comments.destroy({
                     where: {
-                        comment_id: req.params.commentId
+                        commentID: req.params.commentID
                     }
                 }).then(
-                    res.status(200).json({message: "Comment deleted with sucess!"})
+                    res.status(200).json({message: "comment deleted with sucess!"})
                 )
                 return;
             }
             res.status(200).json({
-                message: `No Comment with id: ${req.params.commentId} was found on the database.`
+                message: `No Comment with id: ${req.params.commentID} was found on the database.`
             });
         }
         )
@@ -297,30 +254,31 @@ exports.deleteComment = (req, res) => {
             })
         })
 }
-// Function used to get all subjects
+
+
 exports.getAllSubjects = (req, res) => {
-    Subjects.findAll()
+    subjects.findAll()
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving Subjects."
+                message: err.message || "error retrieving subjects"
             });
         })
 }
 
-// Function used to create a subject
+
 exports.createSubject = async (req, res) => {
-    let sub = await subjects.findOne({where: {subjectDescription: req.body.subjectDescription}})
-    if (sub === null) {
+    let subject = await subjects.findOne({where: {subjectID: req.body.subjectID}})
+    if (subject === null) {
         subjects.create({
-            subjectDescription: req.body.subjectDescription,
+            subjectID: req.body.subjectID,
             subjectName: req.body.subjectName
         })
         .then(data => {
             res.status(201).json({
-                message: "New Subject created.",
+                message: "new subject created.",
                 location: "/subjects/" + data.subjectID
             });
     
@@ -332,37 +290,11 @@ exports.createSubject = async (req, res) => {
                 });
             else
                 res.status(500).json({
-                    message: err.message || "Some error occurred while creating the Subject."
+                    message: err.message || "error."
                 });
         });
     } else {
-        res.status(200).json({message: "Subject already created"})
+        res.status(200).json({message: "subject already exists"})
     }
     
 }
-
-// Function used to delete a subject
-exports.deleteSubject = (req, res) => {
-    subjects.destroy({
-        where: {
-            subjectID: req.params.subjectID
-        }
-    })
-    .then(num => {
-        if (num != 0) {
-            res.status(200).json({
-                message: "Subject deleted with success"
-            })
-            return;
-        }
-        res.status(200).json({
-            message: `No Subject with id: ${req.params.subjectID} was found on the database.`
-        });
-    }
-    )
-    .catch(err => {
-        res.status(500).send({
-            message: err.message || 'Some error ocurred while trying to delete Subject.'
-        })
-    })
-}*/

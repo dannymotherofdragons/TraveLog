@@ -1,13 +1,9 @@
-// Call express
 const express = require('express');
 
-// Call express router
 let router = express.Router();
 
-// Get the tools controller file
 const authController = require('../controllers/auth.controller');
 
-// Function used to determine the time that it takes to make a request
 router.use((req, res, next) => {
     const start = Date.now();
     res.on("finish", () => {
@@ -33,5 +29,4 @@ router.all('*', function (req, res) {
     });
 })*/
 
-// Export tools router
 module.exports = router;

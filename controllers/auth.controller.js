@@ -1,21 +1,20 @@
-// Get database info
+
 const db = require("../models/db.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const config = require("../config/auth.config.js");
 
-// Call database tables
-const Users = db.user;
+const users = db.user;
 
 exports.signin = async (req, res) => {
     try {
-        let user = await Users.findOne({
+        let user = await users.findOne({
             where: {
                 email: req.body.email
             }
         });
         if (!user) return res.status(404).json({
-            message: "User Not found."
+            message: "user not found"
         });
         const passwordIsValid = await bcrypt.compareSync(
             req.body.password, user.password.toString()
@@ -26,7 +25,7 @@ exports.signin = async (req, res) => {
         ) {
             return res.status(401).json({
                 accessToken: null,
-                message: "Invalid Password!"
+                message: "password incorrect"
             });
         }
 
@@ -59,16 +58,16 @@ exports.signin = async (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        let user = await Users.findOne({
+        let user = await users.findOne({
             where: {
                 email: req.body.email
             }
         });
         if (user)
             return res.status(400).json({
-                message: "Failed! Email is already in use!"
+                message: "email in use"
             });
-        user = await Users.create({
+        user = await users.create({
             username: req.body.username,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 8),
@@ -76,7 +75,7 @@ exports.signup = async (req, res) => {
         });
 
         return res.json({
-            message: "User was registered successfully!"
+            message: "registered"
         });
     } catch (err) {
         res.status(500).json({
@@ -112,7 +111,7 @@ exports.verifyToken = (req, res, next) => {
         return;
     }
     return res.status(403).send({
-        message: "Require Admin Role!"
+        message: "you're not a professor"
     })
 };
 
@@ -123,6 +122,6 @@ exports.isProfOrLogged = async (req, res, next) => {
         return;
     }
     return res.status(403).send({
-        message: "Require prof Role!"
+        message: "you're not a professor"
     });
 };*/

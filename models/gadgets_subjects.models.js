@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const gadget_subject = sequelize.define("gadget_subject", {
-        gadgetID: {  // Foreign key that determines the tool
+        gadgetID: {  // foreign key
             type: DataTypes.INTEGER,
             primaryKey: true,
             references: {
                 model: 'gadget',
-                key: 'gadgetID'
+                key: 'gadgetName'
             }
         },
-        subjectID: {   // Foreign key that determines the subject
+        subjectID: {   // foreign key
             type: DataTypes.INTEGER,
             primaryKey: true,
             references: {

@@ -1,18 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const subject = sequelize.define("subjects", {
-        subjectID: {   // Identifier of each subject
+    const subjects = sequelize.define("subjects", {
+        subjectID: {   
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        subjectDescription: { // The initials of each subject
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        subjectName: { // The complete namo of the subject
+        subjectName: { 
             type: DataTypes.STRING,
             allowNull: false
         }
     });
-    return subject;
+    return subjects;
 }

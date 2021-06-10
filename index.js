@@ -1,16 +1,13 @@
-// start modulesno
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-// create server
 const app = express();
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '127.1.0.0';
 const db = require("./models/db.js");
 const {
     sequelize,
-    user
 } = require('./models/db.js');
 
 /*(async () => {
@@ -27,17 +24,14 @@ db.sequelize.sync();
 app.use(cors());
 app.use(express.json());
 
-// routes 127.1.0.0:8080/
 app.get('/', function (req, res) {
     res.status(200).json({
         message: 'home'
     });
 });
 
-// call routes 127.1.0.0:8080/user
 app.use('/users', require('./routes/user.routes'));
 
-// call routes 127.1.0.0:8080/tool
 app.use('/gadgets', require('./routes/gadgets.routes'));
 
 app.use('/auth', require('./routes/auth.routes'));
