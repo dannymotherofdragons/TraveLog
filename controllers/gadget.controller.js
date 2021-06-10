@@ -73,7 +73,7 @@ exports.getOneGadget = (req, res) => {
         .then(data => {
             if (data === null) {
                 res.status(200).json({
-                    message: `Tool with name: ${req.params.gadgetName} doesn't exist!`
+                    message: `gadget with name: ${req.params.gadgetName} doesn't exist!`
                 });
                 return;
             }
@@ -81,7 +81,7 @@ exports.getOneGadget = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving tool."
+                message: err.message || "Some error occurred while retrieving gadget."
             });
         })
 }
@@ -109,7 +109,7 @@ exports.createGadget = (req, res) => {
                 });
             else
                 res.status(500).json({
-                    message: err.message || "Some error occurred while creating the Tool."
+                    message: err.message || "Some error occurred while creating the gadget."
                 });
         });
 }
@@ -160,12 +160,12 @@ exports.deleteGadget = (req, res) => {
                 return;
             }
             res.status(200).json({
-                message: "Tool deleted with success."
+                message: "gadget deleted with success."
             });
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || 'Some error ocurred while trying to delete Tool.'
+                message: err.message || 'Some error ocurred while trying to delete gadget.'
             })
         })
 }
