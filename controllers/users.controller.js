@@ -106,17 +106,17 @@ exports.updateUser = async (req, res) => {
         .then(data => {
             if (data[0] === 0) {
                 res.status(200).json({
-                    message: "No User was found with this id."
+                    message: "No user was found with this id."
                 })
                 return;
             }
             res.status(200).json({
-                message: "User updated with success!"
+                message: "user updated with success!"
             })
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error ocurred while updating User."
+                message: err.message || "Some error ocurred while updating user."
             })
         });
 }
@@ -125,7 +125,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     let user = await users.findByPk(req.params.userID)
     if (user) {
-        if (user.isProf != true) {
+        if (user.prof != true) {
             users.destroy({
                     where: {
                         userID: req.params.userID
@@ -134,12 +134,12 @@ exports.deleteUser = async (req, res) => {
                 .then(num => {
                     if (num == 0) {
                         res.status(200).json({
-                            message: `No User with id: ${req.params.userID} was found on the database.`
+                            message: `No user with id: ${req.params.userID} was found on the database.`
                         });
                         return;
                     }
                     res.status(200).json({
-                        message: "User deleted with success."
+                        message: "deleted with success."
                     });
                 })
                 .catch(err => {

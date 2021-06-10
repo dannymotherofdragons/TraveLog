@@ -53,7 +53,6 @@ exports.signin = async (req, res) => {
             message: err.message
         });
     };
-
 }
 
 exports.signup = async (req, res) => {
@@ -115,7 +114,7 @@ exports.verifyToken = (req, res, next) => {
     })
 };
 
-exports.isProfOrLogged = async (req, res, next) => {
+exports.isProfOrNormalUser = async (req, res, next) => {
     let user = await Users.findByPk(req.loggedUserID);
     if (user.prof === true || user.userID === parseInt(req.params.userID)){
         next();
