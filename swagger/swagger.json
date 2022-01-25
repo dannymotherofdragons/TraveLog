@@ -1,0 +1,324 @@
+{
+    "consumes": [
+        "application/json"
+    ],
+    "info": {
+        "title": "Documentação da API",
+        "version": "v1"
+    },
+    "paths": {
+        "/users/": {
+            "get": {
+                "parameters": [{
+                    "in": "query",
+                    "name": "age",
+                    "required": false,
+                    "description": "Idade do usere",
+                    "schema": {
+                        "type": "Integer"
+                    }
+                },
+                {
+                    "in": "query",
+                    "name": "city",
+                    "required": false,
+                    "description": "Cidade do usere",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+                "responses": {
+                    "200": {
+                        "description": "Dados do usere",
+                        "schema": {
+                            "items": {
+                                "properties": {
+                                    "age": {
+                                        "type": "integer"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "createdAt": {
+                                        "format": "date",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "nif": {
+                                        "type": "integer"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "integer"
+                                    },
+                                    "updateAt": {
+                                        "format": "date",
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        }
+                    }
+                },
+                "summary": "Obter os dados de todos os useres",
+                "tags": ["useres"]
+            }
+        },
+        "/users/{userID}": {
+            "delete": {
+                "parameters": [
+                    {
+                        "description": "ID do usere",
+                        "in": "path",
+                        "name": "userID",
+                        "required": true,
+                        "schema": {
+                            "type": "Integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "usere eliminado",
+                        "schema": {
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": [
+                        ]
+                    }
+                ],
+                "summary": "Apagar um usere especifico por ID",
+                "tags": ["useres"]
+            },
+            "get": {
+                "parameters": [
+                    {
+                        "description": "ID do usere",
+                        "in": "path",
+                        "name": "userID",
+                        "required": true,
+                        "schema": {
+                            "type": "Integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados do usere",
+                        "schema": {
+                            "properties": {
+                                "age": {
+                                    "type": "integer"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "createdAt": {
+                                    "format": "date",
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "nif": {
+                                    "type": "integer"
+                                },
+                                "password": {
+                                    "format": "password",
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "integer"
+                                },
+                                "updateAt": {
+                                    "format": "date",
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "summary": "Obter os dados de um usere especifico por ID",
+                "tags": ["useres"]
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "description": "ID do usere",
+                        "in": "path",
+                        "name": "userID",
+                        "required": true,
+                        "schema": {
+                            "type": "Integer"
+                        }
+                    },
+                    {
+                        "description": "Dados do usere",
+                        "in": "body",
+                        "name": "usere",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "usere atualizado",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": [
+                        ]
+                    }
+                ],
+                "summary": "Atualização dos dados um usere especifico por ID",
+                "tags": ["useres"]
+            }
+        },
+        "/users/login": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Credenciais do usere",
+                        "in": "body",
+                        "name": "usere",
+                        "schema": {
+                            "properties": {
+                                "password": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "usere autenticado",
+                        "schema": {
+                            "properties": {
+                                "accessToken": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "summary": "Autenticação do usere",
+                "tags": ["Autenticação"]
+            }
+        },
+        "/users/register": {
+            "post": {
+                "parameters": [
+                    {
+                        "description": "Informações do usere",
+                        "in": "body",
+                        "name": "usere",
+                        "schema": {
+                            "properties": {
+                                "age": {
+                                    "type": "integer"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "nif": {
+                                    "type": "integer"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "integer"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "usere registado",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "summary": "Registo do usere",
+                "tags": ["Autenticação"]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "apiKey"
+        }
+    },
+    "swagger": "2.0"
+}
