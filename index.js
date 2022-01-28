@@ -31,7 +31,7 @@ app.use("/api-docs", expressSwagger);
 app.get("*", function(req, res) {
     res.status(404).json({ message: "Esta rota não esta definida!" });
 });
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
     console.log(`App listening at http://${host}:${port}/`)
     console.log(`Swagger UI: \n API documentation listening at http://${host}:${port}/api-docs-ui`)
     console.log(`Swagger Generator: \n API documentation listening at http://${host}:${port}/api-docs`)
