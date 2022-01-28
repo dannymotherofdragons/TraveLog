@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 const host = "127.0.0.1";
 // Swagger UI
  const swaggerUI = require("swagger-ui-express");
@@ -31,8 +31,9 @@ app.use("/api-docs", expressSwagger);
 app.get("*", function(req, res) {
     res.status(404).json({ message: "Esta rota não esta definida!" });
 });
+app.set("port", PORT)
 app.listen(process.env.PORT, () => {
-    console.log(`App listening at http://${host}:${port}/`)
-    console.log(`Swagger UI: \n API documentation listening at http://${host}:${port}/api-docs-ui`)
-    console.log(`Swagger Generator: \n API documentation listening at http://${host}:${port}/api-docs`)
+    console.log(`App listening at http://${host}:${PORT}/`)
+    console.log(`Swagger UI: \n API documentation listening at http://${host}:${PORT}/api-docs-ui`)
+    console.log(`Swagger Generator: \n API documentation listening at http://${host}:${PORT}/api-docs`)
 })
