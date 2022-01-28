@@ -48,6 +48,43 @@ exports.addComment = async (req, res) =>{
     }    
 }
 
+exports.addCommentToComment = async (req, res) =>{
+    try{
+        let user = await Users.findByPk(req.body.userID);
+        let comment = await Comment.findByPk(req.body.commentID);
+
+        if(user){
+            if(comment)
+            {
+                Comment.create({
+                    userID: user.id,
+                    username: user.username,
+                    commentID: comment.id,
+                    commentContent: req.body.commentContent
+                }).then((result) => {
+                    res.status(200).json(result);
+                }).catch((error) => {
+                    res.status(400).send('ERROR: ' + error)
+                })
+            }
+            else{
+                res.status(400).json({
+                    message: `No comment with the ID: ${req.body.commentID} was found`
+                })
+            }
+        }
+        else{
+            res.status(400).json({
+                message: `No user with the ID: ${req.body.postID} was found`
+            })
+        }
+    } catch (err){
+        res.status(500).json({
+            message:err.message
+        })
+    }    
+}
+
 exports.editComment = async (req, res) =>{
     Comment.update({
         commentContent: req.body.commentContent
@@ -93,11 +130,7 @@ exports.deleteComment = async (req, res) =>{
 
 exports.findCommentByID = async (req, res) =>{
     try{
-        let comment = await Comment.findByPk({
-            where: {
-                id: req.body.commentID
-            }   
-        })
+        let comment = await Comment.findByPk(req.body.commentID)
         if (comment === null)
             res.status(404).json({
                 message: `Não foi possível encontrar o comment com ID "${req.body.id}".`

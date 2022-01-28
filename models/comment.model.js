@@ -32,6 +32,7 @@ Comments.init({
     userID: DataTypes.INTEGER,
     username: DataTypes.STRING,
     postID: DataTypes.INTEGER,
+    commentID: DataTypes.INTEGER,
     commentContent: DataTypes.STRING
 }, { sequelize, modelName: 'comments'})
 

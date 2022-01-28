@@ -19,6 +19,21 @@ router.route("/comment").post(
     }
 )
 
+router.route("/comment").post(
+    body("userID").isNumeric().notEmpty().escape(),
+    body("commentID").isNumeric().notEmpty().escape(),
+    body("commentContent").notEmpty().escape(),
+    (req, res) => {
+        const errors = validationResult(req);
+        if(errors.isEmpty()){
+            commentController.addCommentToComment(req, res);
+        }
+        else{
+            res.status(404).json({ errors: errors.array() });
+        }
+    }
+)
+
 router.route("/findCommentsOnPost").get(
     body("postID").isNumeric().notEmpty(),
     (req, res) => {
